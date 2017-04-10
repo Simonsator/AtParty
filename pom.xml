@@ -31,12 +31,16 @@
 			<id>bungeecord-repo</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</repository>
+		<repository>
+			<id>simonsator-repo</id>
+			<url>simonsator.de/repo</url>
+		</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>de.simonsator</groupId>
-			<artifactId>Party-and-Friends-For-Bungeecord-MySQL</artifactId>
-			<version>LATEST</version>
+			<artifactId>BungeecordPartyAndFriends</artifactId>
+			<version>1.0.57</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
