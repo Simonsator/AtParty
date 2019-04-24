@@ -7,6 +7,7 @@ import de.simonsator.partyandfriends.extensions.atparty.configuration.APConfigLo
 import de.simonsator.partyandfriends.main.Main;
 import de.simonsator.partyandfriends.party.command.PartyCommand;
 import de.simonsator.partyandfriends.party.subcommand.Chat;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -34,7 +35,7 @@ public class APMain extends PAFExtension implements Listener {
 			printError("The party chat command needs to be enabled in the config of PAF in order to use this Extension.");
 			return;
 		}
-		Configuration config = null;
+		Configuration config;
 		try {
 			config = new APConfigLoader(new File(getConfigFolder(), "config.yml")).getCreatedConfiguration();
 			List<String> configKeyWords = config.getStringList("KeyWord");
@@ -42,6 +43,7 @@ public class APMain extends PAFExtension implements Listener {
 			for (String keyWord : configKeyWords)
 				keyWords.add(keyWord.toLowerCase());
 			getProxy().getPluginManager().registerListener(this, this);
+			registerAsExtension();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -51,12 +53,14 @@ public class APMain extends PAFExtension implements Listener {
 	public void onMessage(ChatEvent pEvent) {
 		if (!(pEvent.getSender() instanceof ProxiedPlayer))
 			return;
-		String keyWordUsed = getKeyWordUsed(pEvent.getMessage());
-		if (keyWordUsed == null)
-			return;
-		OnlinePAFPlayer pPlayer = PAFPlayerManager.getInstance().getPlayer((ProxiedPlayer) pEvent.getSender());
-		chatCommand.onCommand(pPlayer, pEvent.getMessage().substring(keyWordUsed.length()).split("\\s+"));
-		pEvent.setCancelled(true);
+		ProxyServer.getInstance().getScheduler().runAsync(Main.getInstance(), () -> {
+			String keyWordUsed = getKeyWordUsed(pEvent.getMessage());
+			if (keyWordUsed == null)
+				return;
+			OnlinePAFPlayer pPlayer = PAFPlayerManager.getInstance().getPlayer((ProxiedPlayer) pEvent.getSender());
+			chatCommand.onCommand(pPlayer, pEvent.getMessage().substring(keyWordUsed.length()).split("\\s+"));
+			pEvent.setCancelled(true);
+		});
 	}
 
 	private String getKeyWordUsed(String pMessage) {
@@ -70,10 +74,5 @@ public class APMain extends PAFExtension implements Listener {
 	private void printError(String pMessage) {
 		for (int i = 0; i < 20; i++)
 			System.out.println(pMessage);
-	}
-
-	@Override
-	public void reload() {
-
 	}
 }
