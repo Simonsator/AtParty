@@ -7,17 +7,15 @@ import de.simonsator.partyandfriends.extensions.atparty.configuration.APConfigLo
 import de.simonsator.partyandfriends.main.Main;
 import de.simonsator.partyandfriends.party.command.PartyCommand;
 import de.simonsator.partyandfriends.party.subcommand.Chat;
-import net.md_5.bungee.api.ProxyServer;
+import de.simonsator.partyandfriends.utilities.ConfigurationCreator;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.event.EventHandler;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -29,20 +27,19 @@ public class APMain extends PAFExtension implements Listener {
 	private ArrayList<String> keyWords;
 
 	public void onEnable() {
-		Main.getInstance().registerExtension(this);
 		chatCommand = (Chat) PartyCommand.getInstance().getSubCommand(Chat.class);
 		if (chatCommand == null) {
 			printError("The party chat command needs to be enabled in the config of PAF in order to use this Extension.");
 			return;
 		}
-		Configuration config;
+		ConfigurationCreator config;
 		try {
-			config = new APConfigLoader(new File(getConfigFolder(), "config.yml")).getCreatedConfiguration();
+			config = new APConfigLoader(new File(getConfigFolder(), "config.yml"), this);
 			List<String> configKeyWords = config.getStringList("KeyWord");
 			keyWords = new ArrayList<>(configKeyWords.size());
 			for (String keyWord : configKeyWords)
 				keyWords.add(keyWord.toLowerCase());
-			getProxy().getPluginManager().registerListener(this, this);
+			getAdapter().registerListener(this, this);
 			registerAsExtension();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -53,7 +50,7 @@ public class APMain extends PAFExtension implements Listener {
 	public void onMessage(ChatEvent pEvent) {
 		if (!(pEvent.getSender() instanceof ProxiedPlayer))
 			return;
-		ProxyServer.getInstance().getScheduler().runAsync(Main.getInstance(), () -> {
+		getAdapter().runAsync(Main.getInstance(), () -> {
 			String keyWordUsed = getKeyWordUsed(pEvent.getMessage());
 			if (keyWordUsed == null)
 				return;
