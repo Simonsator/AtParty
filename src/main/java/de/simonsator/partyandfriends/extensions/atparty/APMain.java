@@ -50,13 +50,13 @@ public class APMain extends PAFExtension implements Listener {
 	public void onMessage(ChatEvent pEvent) {
 		if (!(pEvent.getSender() instanceof ProxiedPlayer))
 			return;
+		String keyWordUsed = getKeyWordUsed(pEvent.getMessage());
+		if (keyWordUsed == null)
+			return;
+		pEvent.setCancelled(true);
 		getAdapter().runAsync(Main.getInstance(), () -> {
-			String keyWordUsed = getKeyWordUsed(pEvent.getMessage());
-			if (keyWordUsed == null)
-				return;
 			OnlinePAFPlayer pPlayer = PAFPlayerManager.getInstance().getPlayer((ProxiedPlayer) pEvent.getSender());
 			chatCommand.onCommand(pPlayer, pEvent.getMessage().substring(keyWordUsed.length()).split("\\s+"));
-			pEvent.setCancelled(true);
 		});
 	}
 

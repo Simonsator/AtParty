@@ -6,7 +6,7 @@
 
 	<groupId>de.simonsator</groupId>
 	<artifactId>AtParty</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-RELEASE</version>
 	<build>
 		<plugins>
 			<plugin>
@@ -33,14 +33,14 @@
 		</repository>
 		<repository>
 			<id>simonsator-repo</id>
-			<url>http://simonsator.de/repo</url>
+			<url>https://simonsator.de/repo</url>
 		</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>de.simonsator</groupId>
 			<artifactId>BungeecordPartyAndFriends</artifactId>
-			<version>1.0.79</version>
+			<version>1.0.89</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
