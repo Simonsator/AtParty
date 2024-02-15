@@ -6,17 +6,50 @@
 
 	<groupId>de.simonsator</groupId>
 	<artifactId>AtParty</artifactId>
-	<version>1.0.2-RELEASE</version>
+	<version>1.0.3-RELEASE</version>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.2</version>
+				<version>3.11.0</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.4.1</version>
+				<configuration>
+					<artifactSet>
+						<includes>
+							<include>de.simonsator:AtParty-Velocity</include>
+						</includes>
+					</artifactSet>
+					<createDependencyReducedPom>false</createDependencyReducedPom>
+					<minimizeJar>false</minimizeJar>
+					<filters>
+						<filter>
+							<artifact>*:*</artifact>
+							<excludes>
+								<exclude>META-INF/*.SF</exclude>
+								<exclude>META-INF/*.DSA</exclude>
+								<exclude>META-INF/*.RSA</exclude>
+								<exclude>META-INF/*.MF</exclude>
+							</excludes>
+						</filter>
+					</filters>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 		<resources>
@@ -56,6 +89,11 @@
 			<version>1.15-SNAPSHOT</version>
 			<type>javadoc</type>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.simonsator</groupId>
+			<artifactId>AtParty-Velocity</artifactId>
+			<version>1.0.3-RELEASE</version>
 		</dependency>
 	</dependencies>
 </project>
