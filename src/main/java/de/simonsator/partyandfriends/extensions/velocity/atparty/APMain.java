@@ -43,7 +43,6 @@ public class APMain extends PAFExtension {
 			keyWords = new ArrayList<>(configKeyWords.size());
 			for (String keyWord : configKeyWords)
 				keyWords.add(keyWord.toLowerCase());
-			getAdapter().registerListener(this, this);
 			registerAsExtension();
 		} catch (IOException e) {
 			e.printStackTrace();
