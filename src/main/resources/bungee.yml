@@ -1,6 +1,0 @@
-name: AtParty
-version: ${project.version}
-author: Simonsator
-depends: [PartyAndFriends]
-main: de.simonsator.partyandfriends.extensions.atparty.APMain
-description: 'An extension to use @party in the chat'

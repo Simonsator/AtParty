@@ -1,7 +1,7 @@
-package de.simonsator.partyandfriends.extensions.atparty.configuration;
+package de.simonsator.partyandfriends.extensions.velocity.atparty.configuration;
 
-import de.simonsator.partyandfriends.api.PAFExtension;
-import de.simonsator.partyandfriends.utilities.ConfigurationCreator;
+import de.simonsator.partyandfriends.velocity.api.PAFExtension;
+import de.simonsator.partyandfriends.velocity.utilities.ConfigurationCreator;
 
 import java.io.File;
 import java.io.IOException;
