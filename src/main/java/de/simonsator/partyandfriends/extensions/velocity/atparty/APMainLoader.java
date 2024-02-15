@@ -12,7 +12,7 @@ import de.simonsator.partyandfriends.velocity.main.PAFPlugin;
 
 import java.nio.file.Path;
 
-@Plugin(id = "at-party-loader", name = "At Party Loader", version = "1.0.3",
+@Plugin(id = "at-party-loader", name = "At Party Loader", version = "1.0.3-RELEASE",
 		description = "Loads At Party for Party and Friends", authors = {"Simonsator"}, dependencies = {@Dependency(id = "partyandfriends")})
 public class APMainLoader {
 	private final Path folder;
@@ -30,7 +30,7 @@ public class APMainLoader {
 		APMain instance = new APMain(folder);
 
 		PAFPlugin.loadExtension(new VelocityExtensionLoadingInfo(instance,
-				"at-party-for-party-and-friends", "Loads At Party for Party and Friends", "1.0.3", "Simonsator"));
+				"at-party-for-party-and-friends", "Loads At Party for Party and Friends", "1.0.3-RELEASE", "Simonsator"));
 
 		server.getEventManager().register(this, instance);
 	}
